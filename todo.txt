@@ -1,0 +1,5 @@
+- implement like/unlike tweets feature
+- add possibility to follow/unfollow users
+- add posibility to have private account
+- allow user to hide liked tweets
+- peronalize feed for user based on people followed
