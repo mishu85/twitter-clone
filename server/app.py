@@ -216,3 +216,6 @@ def get_user_data():
     if user == None:
         abort(404)
     return {'data': user}
+
+if __name__ == "__main__":
+    app.run(debug=True)
