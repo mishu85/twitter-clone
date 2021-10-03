@@ -6,7 +6,7 @@ async function postLogin(email, password) {
     var bodyFormData = new FormData();
     bodyFormData.append('email', email);
     bodyFormData.append('password', password);
-    const response = await ApiHttpClient().post("/login", bodyFormData);
+    const response = await ApiHttpClient().post("/users/login", bodyFormData);
     return response.data.data;
   } catch (error) {
     console.log(error.message);

@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Flask, request, abort
 from flask_cors import CORS
 from flask_httpauth import HTTPTokenAuth
-import jwt
+import jwt #pyjwt
 from pymongo import MongoClient
 from bson.json_util import ObjectId
 import json
@@ -11,12 +11,14 @@ from werkzeug.utils import secure_filename
 import os
 from pathlib import Path
 import uuid
+from flask_restful import Api
+from resources.users import users_add_resources
 
 jwt_secret_key = "secret" #"blabla"
 
-client = MongoClient(host="localhost", port=27017)
+db_client = MongoClient(host="localhost", port=27017)
 
-db = client["twitter-clone"]
+db = db_client["twitter-clone"]
 tweets = db.tweets
 users = db.users
 
@@ -35,10 +37,14 @@ UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_url_path='/static')
+app.json_encoder = MyEncoder
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 auth = HTTPTokenAuth(scheme='Bearer')
 CORS(app)
-app.json_encoder = MyEncoder
+
+api = Api(app)
+app.config['RESTFUL_JSON'] = {'cls':MyEncoder}
+users_add_resources(api, db_client, "/api/users")
 
 @auth.verify_token #!
 def verify_token(token):
@@ -53,19 +59,6 @@ def get_current_identity(request):
     token = request.headers['Authorization'].split(' ')[1]
     user_id = jwt.decode(token, jwt_secret_key, algorithms=["HS256"])["user_id"]
     return users.find_one({'_id': ObjectId(user_id)}, {'password': False})
-
-@app.route('/api/login', methods=['POST'])
-def login(): 
-    email = request.form['email']
-    password = request.form['password']
-    user = users.find_one({'email': email})
-    if user is not None and check_password_hash(user['password'], password):
-        user = users.find_one({'email': email}, {'password': False})
-        token = jwt.encode({"user_id": str(user['_id'])}, jwt_secret_key, algorithm="HS256") #why id?
-        return {'data': {
-            'user': user,
-            'token': token,
-        }}
 
 @app.route('/api/signup', methods = ['POST'])
 def signup():
