@@ -22,7 +22,7 @@ async function postSignup(email, password, repeatedPassword, firstName, lastName
     bodyFormData.append('repeatedPassword', repeatedPassword);
     bodyFormData.append('firstName', firstName);
     bodyFormData.append('lastName', lastName);
-    const response = await ApiHttpClient().post("/signup", bodyFormData);
+    const response = await ApiHttpClient().post("users/register", bodyFormData);
     return response.data.data;
   } catch (error) {
     console.log(error.message);
@@ -44,7 +44,7 @@ async function postUserUpdate(
     bodyFormData.append('firstName', firstName);
     bodyFormData.append('lastName', lastName);
     bodyFormData.append('newPassword', newPassword);
-    const response = await ApiHttpClient().put("/me", bodyFormData);
+    const response = await ApiHttpClient().put("/users/me", bodyFormData);
     return response.data.data;
   } catch (error) {
     console.log(error.message);
@@ -54,7 +54,7 @@ async function postUserUpdate(
 
 async function getMyUserData() {
   try {
-    const response = await ApiHttpClient().get("/me");
+    const response = await ApiHttpClient().get("/users/me");
     return response.data.data;
   } catch (error) {
     console.log(error.message);
@@ -70,7 +70,7 @@ async function putUpdateAvatar(avatar) {
       avatar,
       avatar.name
     );
-    const response = await ApiHttpClient().put("/avatar", bodyFormData);
+    const response = await ApiHttpClient().put("/users/avatar", bodyFormData);
     return response.data.data;
   } catch (error) {
     console.log(error.message);
