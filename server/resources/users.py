@@ -28,7 +28,6 @@ def users_add_resources(api:Api, db_client:MongoClient, path:str):
     api.add_resource(TweetsForUsersByIdApi, path+ "/<id>/tweets", endpoint= "tweets_for_users_by_id")
 
 class UsersByIdApi(Resource):
-    @auth.login_required
     def get(self, id):
         user =  users.find_one({'_id': ObjectId(id)}, {'password': False})
         if user == None:

@@ -1,8 +1,18 @@
+from datetime import datetime
+import json
 from bson.json_util import ObjectId
 import jwt #pyjwt
 from pymongo.collection import Collection
 from flask_httpauth import HTTPTokenAuth
 import os
+
+class MyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        if isinstance(obj, datetime):
+            return str(obj)
+        return super(MyEncoder, self).default(obj)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static', 'images') #static/images ?
