@@ -8,7 +8,6 @@ async function getTweets() {
   } catch (error) {
     console.log(error.message);
   }
-
   return null;
 }
 

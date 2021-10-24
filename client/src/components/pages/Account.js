@@ -9,7 +9,7 @@ import {
   Button,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { postUserUpdate, getMyUserData } from "../../api/authApi";
+import { updateMe, getMe } from "../../api/usersApi";
 import CloseIcon from "@material-ui/icons/Close";
 import Auth from "../../auth";
 import UploadAvatar from "./accountComponents/UploadAvatar";
@@ -50,7 +50,7 @@ function Account() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   useEffect(async () => {
-    const data = await getMyUserData();
+    const data = await getMe();
     setEmail(data.email);
     setFirstName(data.firstName);
     setLastName(data.lastName);
@@ -63,7 +63,7 @@ function Account() {
       setSnackBarOpen(true);
       return;
     }
-    const response = await postUserUpdate(
+    const response = await updateMe(
       email,
       oldPassword,
       firstName,

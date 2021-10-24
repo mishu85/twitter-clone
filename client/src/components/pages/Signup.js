@@ -15,7 +15,7 @@ import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import FingerprintIcon from "@material-ui/icons/Fingerprint";
-import { postSignup } from "../../api/authApi";
+import { register } from "../../api/usersApi";
 import { useState } from "react";
 // import { Link } from "react-router-dom";
 import Auth from "../../auth";
@@ -44,7 +44,7 @@ function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await postSignup(email, password, repeatedPassword, firstName, lastName);
+    const response = await register(email, password, repeatedPassword, firstName, lastName);
     if (response) {
       console.log("signed up!");
       console.log(response);

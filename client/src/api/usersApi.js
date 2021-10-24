@@ -1,7 +1,26 @@
-// import axios from "axios";
 import { ApiHttpClient } from "../ApiHttpClient";
 
-async function postLogin(email, password) {
+async function getUserById(userId) {
+  try {
+    const response = await ApiHttpClient().get("/users/" + userId);
+    return response.data.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+  return null;
+}
+
+async function getTweetsForUserById(userId) {
+  try {
+    const response = await ApiHttpClient().get("/users/" + userId + "/tweets");
+    return response.data.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+  return null;
+}
+
+async function login(email, password) {
   try {
     var bodyFormData = new FormData();
     bodyFormData.append('email', email);
@@ -14,7 +33,7 @@ async function postLogin(email, password) {
   return null;
 }
 
-async function postSignup(email, password, repeatedPassword, firstName, lastName) {
+async function register(email, password, repeatedPassword, firstName, lastName) {
   try {
     var bodyFormData = new FormData();
     bodyFormData.append('email', email);
@@ -30,7 +49,7 @@ async function postSignup(email, password, repeatedPassword, firstName, lastName
   return null;
 }
 
-async function postUserUpdate(
+async function updateMe(
   email,
   oldPassword,
   firstName,
@@ -52,7 +71,7 @@ async function postUserUpdate(
   return null;
 }
 
-async function getMyUserData() {
+async function getMe() {
   try {
     const response = await ApiHttpClient().get("/users/me");
     return response.data.data;
@@ -62,7 +81,7 @@ async function getMyUserData() {
   return null;
 }
 
-async function putUpdateAvatar(avatar) {
+async function updateAvatar(avatar) {
   try {
     var bodyFormData = new FormData();
     bodyFormData.append(
@@ -78,4 +97,4 @@ async function putUpdateAvatar(avatar) {
   return null;
 }
 
-export { postLogin, postSignup, postUserUpdate, getMyUserData, putUpdateAvatar };
+export { getUserById, getTweetsForUserById, login, register, updateMe, getMe, updateAvatar };

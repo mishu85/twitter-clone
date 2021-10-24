@@ -1,5 +1,5 @@
 import Layout from "../Layout";
-import { getUserData } from "../../api/userApi";
+import { getUserById } from "../../api/usersApi";
 import { useState, useEffect } from "react";
 import { Card, CardHeader, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -56,7 +56,7 @@ function User(props) {
   const [loading, setLoading] = useState(true);
 
   const initialLoad = async () => {
-    const response = await getUserData(userId);
+    const response = await getUserById(userId);
     setUserData(response);
     setLoading(false);
   };

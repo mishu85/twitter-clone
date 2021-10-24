@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import { putUpdateAvatar } from "../../../api/authApi";
+import { updateAvatar } from "../../../api/usersApi";
 import Auth from "../../../auth";
 import {serverAddress} from "../../../ApiHttpClient";
 
@@ -40,7 +40,7 @@ export default function ProfileAvatar() {
   const handleUpload = async (event) => {
     event.preventDefault();
     console.log(event.target.files[0]);
-    const response = await putUpdateAvatar(event.target.files[0]);
+    const response = await updateAvatar(event.target.files[0]);
     if (response) {
       console.log("avatar updated!");
       console.log(response);

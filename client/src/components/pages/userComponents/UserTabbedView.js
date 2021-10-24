@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Tabs, Tab, Box } from "@material-ui/core";
 import TweetCard from "../../shared/TweetCard"
 import { useState, useEffect } from "react";
-import { getUserTweetsForTabs } from "../../../api/userApi";
+import { getTweetsForUserById } from "../../../api/usersApi";
 
 function TabPanel(props) {
   const { children, value, index, data, ...other } = props;
@@ -58,7 +58,7 @@ export default function UserTabbedView(props) {
 
 
   const initialLoad = async () => {
-    const response = await getUserTweetsForTabs(userId);
+    const response = await getTweetsForUserById(userId);
     setData(response);
   };
 

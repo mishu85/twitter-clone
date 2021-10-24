@@ -15,7 +15,7 @@ import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import FingerprintIcon from "@material-ui/icons/Fingerprint";
-import { postLogin, getMyUserData } from "../../api/authApi";
+import { login } from "../../api/usersApi";
 import { useState } from "react";
 import Auth from "../../auth";
 // import { Link } from "react-router-dom";
@@ -43,7 +43,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await postLogin(email, password);
+    const response = await login(email, password);
     if (response) {
       let myUser = {
         firstName: response.user.firstName, 
